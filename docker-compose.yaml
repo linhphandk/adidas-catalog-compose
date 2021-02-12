@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  catalog-back:
+    build: ./adidas-catalog-back
+    ports:
+      - 8001:8001
+    volumes:
+      - ./adidas-catalog-back:/app
+  
+  catalog-front:
+    build: ./adidas-catalog-front
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./adidas-catalog-front:/app
+  
+  catalog-db:
+    image: postgres:13
+    ports: 
+      - 5432:5432
+    volumes:
+      - ./adidas-catalog-back/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=catalog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
